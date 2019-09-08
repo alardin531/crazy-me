@@ -12,7 +12,7 @@ int main ()
     int N;
 
     scanf("%d", &N);
-    PrintN( N );
+    PrintN(printN(N)); 
 
     return 0;
 }
