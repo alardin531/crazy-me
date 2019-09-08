@@ -39,6 +39,10 @@ int main (){
 		}
         p=p->next;
     }
+    printf("ig you win");
+	if(n%2==0){
+		printf("double");
+	} 
     return 0;
 }
 
