@@ -23,7 +23,7 @@ struct student * create(int n){
         }
     }
     p2->next=NULL;
-    return head;
+    return (head);
 }
 int main (){
     struct student *head,*p;
@@ -39,10 +39,6 @@ int main (){
 		}
         p=p->next;
     }
-    printf("ig you win");
-	if(n%2==0){
-		printf("double");
-	} 
     return 0;
 }
 
