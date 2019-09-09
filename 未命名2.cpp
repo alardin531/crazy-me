@@ -16,7 +16,7 @@ struct student * create(int n){
             p2=p1;
         }
         else{
-            p1=(struct student *)malloc(sizeof(struct student));
+            p1=(struct student *)malloc(sizeof(struct student *));
             scanf("%d",&p1->a);
             p2->next=p1;
             p2=p1;
