@@ -39,6 +39,7 @@ int main (){
 		}
         p=p->next;
     }
+    printf("%d",n); 
     return 0;
 }
 
