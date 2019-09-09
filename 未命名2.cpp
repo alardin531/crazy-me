@@ -35,7 +35,7 @@ int main (){
         	printf("%d ",p->a);
 		}
 		else{
-			printf("%d",p->a);
+			printf("%d line",p->a);
 		}
         p=p->next;
     }
