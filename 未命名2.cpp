@@ -38,6 +38,7 @@ int main(){
 	}
 	n=s;
 	p1=p2=create(arr,n);
+	printf("give me some sunshine");
 	for(int i=0;i<n;i++){
 		if(i==n-1){
 			printf("%d",p1->a);
