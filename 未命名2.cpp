@@ -46,6 +46,7 @@ int main(){
 			printf("%d ",p1->a);
 		}
 		p1=p1->next;
+		printf("once more"); 
 	}
 	return 0;
 }
