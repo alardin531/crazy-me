@@ -40,6 +40,7 @@ int main(){
 		m=m->next;
 	}
 	printf("%d",n);
+	printf("my destiny");
 	return 0;
 }
 
