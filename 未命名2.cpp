@@ -39,6 +39,7 @@ int main(){
 		}
 		m=m->next;
 	}
+	printf("%d",n);
 	return 0;
 }
 
