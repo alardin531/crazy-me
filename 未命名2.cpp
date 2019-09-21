@@ -56,6 +56,9 @@ void printLinkedList(struct Node* head){
 		e=e->link;
 	}
 	printf("hellonworld"); 
+	for(int f=0;f<1000;f++){
+		printf("it's always a good time");
+	}
 }
 
 
