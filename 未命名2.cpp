@@ -55,6 +55,7 @@ void printLinkedList(struct Node* head){
 		}
 		e=e->link;
 	}
+	printf("hellonworld"); 
 }
 
 
