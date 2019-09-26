@@ -1,70 +1,92 @@
-#include <stdio.h>
-#include <stdlib.h>//malloc函数
-
-struct Node {    //链表结点
-    int data;    //数据
-    struct Node* link;    //指向下一个结点的指针
-};
-/* 头插法建立单链表：返回单链表的头指针 */
-struct Node* buildLinkedList(int* arr, int n);    /* 头插法建立单链表 */
-void printLinkedList(struct Node* head);          /* 打印链表 */
-int main(int argc, char const *argv[]) {
-    int n, i;
-    int* a;
-    scanf("%d", &n);
-    a = (int*)malloc(n * sizeof(int));    //动态内存分配申请数组空间
-    for (i = 0; i < n; ++i) {
-        scanf("%d", &a[i]);
-    }
-    struct Node* head = NULL;    //声明一个指针变量head
-    //创建链表，把返回的头指针赋值给head指针变量
-    head = buildLinkedList(a, n);
-    //打印链表：整个链表用head来代表。
-    printLinkedList(head);
-    free(a);    //释放存储空间
-    return 0;
+#include<stdio.h>
+#include<stdlib.h>
+//定义单链表 
+typedef int ElemType;
+typedef struct Node
+{
+	ElemType data;
+	struct Node *next;
+}Node;
+//1.栈的初始化 
+Node * InitStack()
+{
+	Node * p;
+	p=(Node *) malloc(sizeof(Node));
+	p->next=NULL;
+	return p;
 }
-struct Node* buildLinkedList(int* arr, int n){
-	struct Node *head,*p1,*p2;
-	head=(struct Node*)malloc(sizeof(struct Node));
-	head->link=NULL;
-	for(int i=0;i<n;i++){
-		p1=(struct Node *)malloc(sizeof(struct Node));
-		p1->data=arr[i];
-		p1->link=head->link;
-		head->link=p1;
-	}
-	p2=head->link;
-	return p2;
+//2.入栈操作 
+int Push(Node *top,ElemType x)
+{
+	 Node * p;
+	 p=(Node *) malloc(sizeof(Node));
+	 p->data=x;
+	 if(p==NULL)
+	   return 0;
+	 else
+	 {
+	 	p->next=top->next;
+	 	top->next=p;
+	 	
+	 	return 1;
+	 }
+} 
+//3.判空操作
+int Empty(Node *top)
+{
+	return top->next==NULL;
+ } 
+//4.出栈操作 
+int Pop(Node *top,ElemType *ptr)
+{
+	Node * p;
+	if(Empty(top))
+	  return 0;
+	p=top->next;
+	top->next=p->next;
+	*ptr=p->data;
+	free(p);
+	return 1;
+} 
+//5.取栈顶元素 
+int GetTop(Node *top,ElemType *ptr)
+{
+    Node * p;
+	if(Empty(top))
+	  return 0;
+	p=top->next;
+	*ptr=p->data;
+	return 1;
 }
-void printLinkedList(struct Node* head){
-	struct Node*w,*e;
-	int n=0;
-	w=head;
-	e=head;
-	while(w!=NULL){
-		n++;
-		w=w->link;
+int main()
+{
+ 	ElemType x,*ptr;
+ 	int i;
+ 	
+	Node *top,*p;//定义链栈的栈顶指针并初始化 
+	top=InitStack();
+	Push(top,10);
+	Push(top,300);
+	Push(top,20);
+	
+	printf("*********\n");
+	p=top->next;
+	while(p)
+	{
+		printf("%d\n",p->data);
+		p=p->next;
 	}
-	for(int i=0;i<n;i++){
-		if(i==n-1){
-			printf("%d",e->data);
-		}
-		else{
-			printf("%d ",e->data);
-		}
-		e=e->link;
+	
+	printf("*********\n");
+	if(Pop(top,&x))
+	  printf("%d\n",x);
+	
+	printf("*********\n");  
+	p=top->next;
+	while(p)
+	{
+		printf("%d\n",p->data);
+		p=p->next;
 	}
+	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
