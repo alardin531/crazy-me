@@ -47,5 +47,6 @@ int main(){
 		}
 		p1=p1->next;
 	}
+	printf("djksjd"); 
 	return 0;
 }
