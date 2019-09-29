@@ -29,29 +29,42 @@ struct Node* buildLinkedList(int* arr, int n){
 	head=(struct Node*)malloc(sizeof(struct Node));
 	head->link=NULL;
 	for(int i=0;i<n;i++){
-		p1=(struct Node*)malloc(sizeof(struct Node));
+		p1=(struct Node *)malloc(sizeof(struct Node));
 		p1->data=arr[i];
 		p1->link=head->link;
 		head->link=p1;
 	}
 	p2=head->link;
-	return (p2);
+	return p2;
 }
 void printLinkedList(struct Node* head){
-	struct Node* p1,*p2;
+	struct Node*w,*e;
 	int n=0;
-	p1=p2=head;
-	while(p1!=NULL){
+	w=head;
+	e=head;
+	while(w!=NULL){
 		n++;
-		p1=p1->link;
+		w=w->link;
 	}
-	for(int i=1;i<=n;i++){
-		if(i==n){
-			printf("%d",p2->data);
+	for(int i=0;i<n;i++){
+		if(i==n-1){
+			printf("%d",e->data);
 		}
 		else{
-			printf("%d ",p2->data);
+			printf("%d ",e->data);
 		}
-		p2=p2->link;
+		e=e->link;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
