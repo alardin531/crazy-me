@@ -1,121 +1,87 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include<string.h>
-#define ERROR 1e8
-typedef int ElementType;
-enum  Operation{push,pop,end};
-//typedef enum { false, true } bool;
-typedef int Position;
-struct SNode {
-    ElementType *Data;
-    Position Top1, Top2;
-    int MaxSize;
-};
-typedef struct SNode *Stack;
-Stack CreateStack(int MaxSize)
-{
-    Stack stack = (Stack)malloc(sizeof(struct SNode));
-    stack->Data = (int *)malloc(sizeof(ElementType)* MaxSize);
-    stack->Top1 = -1;
-    stack->Top2 = MaxSize;
-    stack->MaxSize = MaxSize;
-    return stack;
+#include<stdio.h>
+#include<stdlib.h>
+typedef int position;
+typedef struct snode * ptrtosnode;
+struct snode{
+	int *data;
+	position top;
+	int maxsize;
+}; 
+typedef ptrtosnode stack;
+stack createstack(int maxsize){
+	stack s=(stack)malloc(sizeof(struct snode));
+	s->data=(int *)malloc(maxsize*sizeof(int));
+	s->top=-1;
+	s->maxsize=maxsize;
+	return s;
 }
-bool Push(Stack S, ElementType X, int Tag)
-{
-    if (S == NULL)return false;
-    if (S->Top1+1==S->Top2){
-        printf("Stack Full\n");
-        return false;
-    }
-
-    if (Tag == 1)
-        S->Data[++S->Top1] = X;
-     else S->Data[--S->Top2] = X;
-     return true;
+bool IsFull(stack s){
+	return(s->top==s->maxsize-1);
 }
-ElementType Pop(Stack S, int Tag)
-{
-    if (S == NULL)return ERROR;
-    if (Tag == 1){
-        if (S->Top1 == -1)
-        {
-            printf("Stack %d Empty\n",Tag);
-            return ERROR;
-        }
-        return S->Data[S->Top1--];
-    }
-    
-    if (S->Top2 == S->MaxSize)
-    {
-        printf("Stack %d Empty\n", Tag);
-        return ERROR;
-    }
-    return S->Data[S->Top2++];
-    
-    
-}
-
-Operation GetOp(){
-	char s[10];
-	scanf("%s",&s);
-    if(strcmp(s,"push")==0){
-    	return push;
+bool push(stack s,int x){
+	if(IsFull(s)){
+		printf("¶ÑÕ»Âú£¡\n");
+		return false;
 	}
-	if(strcmp(s,"pop")==0){
-		return pop;
+	else{
+		s->data[++(s->top)]=x;
+		return true; 
 	}
-	if(strcmp(s,"end")==0){
-		return end;
+} 
+bool IsEmpty(stack s){
+	return(s->top==-1);
+}
+int pop(stack s){
+	if(IsEmpty(s)){
+		printf("¶ÑÕ»¿Õ!\n");
+		return false;
+	}
+	else{
+		return (s->data[(s->top)--]);
 	}
 }
-void PrintStack(Stack S,int Tag){
-	if(Tag==1){
-		printf("pop from stack 1:\n");
-		for(int i=S->Top1;i>=0;i--){
-			printf("%d\n",S->Data[S->Top1]);
-			S->Top1--;
-		}
+void prints(stack s,int key){
+	for(int i=0;i<key;i++){
+		printf("%d\n",s->data[i]);
 	}
-	if(Tag==2){
-		printf("pop from stack 2:\n");
-		for(int i=S->Top2;i<S->MaxSize;i++){
-			printf("%d\n",S->Data[S->Top2]);
-			S->Top2++;
-		}
-	}
+}
+int main(){
+	struct snode* s1;
+	int key;
+	scanf("%d",&key);
+	s1=createstack(key);
+	pop(s1);
+	push(s1,1);
+	push(s1,2);
+	push(s1,3);
+	push(s1,4);
+	push(s1,5);
+	push(s1,6);
+	push(s1,7);
+	prints(s1,key);
+	return 0;
 }
 
-int main()
-{
-    int N, Tag, X;
-    Stack S;
-    int done = 0;
 
-    scanf("%d", &N);
-    S = CreateStack(N);
-    while ( !done ) {
-        switch( GetOp() ) {
-        case push: 
-            {
-			scanf("%d %d", &Tag, &X);
-            if (!Push(S, X, Tag)) printf("Stack %d is Full!\n", Tag);}
-            break;
-        case pop:
-            {
-			scanf("%d", &Tag);
-            X = Pop(S, Tag);
-            if ( X==ERROR ) printf("Stack %d is Empty!\n", Tag);}
-            break;
-        case end:
-            {
-			PrintStack(S, 1);
-            PrintStack(S, 2);
-            done = 1;
-			}
-            break;
-        }
-    }
-    return 0;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
