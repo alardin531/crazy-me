@@ -1,116 +1,108 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#define ERROR 1e8
-enum operation{pop,push,end};
-typedef int elementtype;
-struct snode{
-	int maxsize;
-	int top1,top2;
-	int *data;
-}; 
-typedef struct snode* stack;
-stack createstack(int maxsize){
-	stack s=(stack)malloc(sizeof(struct snode));
-	s->data=(int*)malloc(maxsize*sizeof(int));
-	s->maxsize=maxsize;
-	s->top1=-1;
-	s->top2=maxsize;
-	return s;
+#include <stdio.h>
+#include <stdlib.h>
+#define NoInfo 0
+
+typedef int ElementType;
+typedef struct TNode *Position;
+typedef Position BinTree;
+struct TNode{
+    ElementType Data;
+    BinTree Left;
+    BinTree Right;
+};
+struct Qnode{
+	int* Data;
+	int front,rear;
+	int Maxsize;
+};
+typedef struct Qnode* Queue;
+Queue CreateQueue(int MaxSize){
+	Queue Q=(Queue)malloc(sizeof(struct Qnode));
+	Q->Data=(int*)malloc(sizeof(int)*M0axsize);
+	Q->front=Q->rear=0;
+	Q->Maxsize=Maxsize;
+	return Q; 
 }
-bool Push(stack s,int x,int tag){
-	if(s==NULL) return false;
-		if(s->top1+1==s->top2){
-		printf("stack full\n");
+bool IsFull(Queue Q){
+	return ((Q->front+1)%Q->Maxsize==Q->rear);
+}
+bool AddQ(Queue Q,BinTree x){
+	if(IsFull(Q)){
+		printf("¶ÓÁÐÂú\n");
 		return false;
-	    }
-	if(tag==1){
-		s->data[--s->top1]=x;
 	}
-	else s->data[++s->top2]=x;
-	return true;
-}
-elementtype Pop(stack s,int tag){
-	if(s==NULL) return ERROR;
-	if(tag==1){
-		if(s->top1==-1){
-			printf("stack %d is empty\n",tag);
-			return ERROR;
-		}
-		else{
-			return s->data[s->top1--];
-		}
-	}
-	if(tag==2){
-		if(s->top2==s->maxsize){
-			printf("stack %d is empty\n");
-			return ERROR;
-		}
-		else{
-			return s->data[s->top2++];
-		}
+	else{
+		Q->rear=(Q->rear+1)%Q->Maxsize;
+		Q->rear=x;
+		return true;
 	}
 }
-operation getop(){
-	char a[10];
-	scanf("%s",&a);
-	if(strcmp(a,"push")==0){
-		return push;
+bool IsEmpty(Queue Q){
+	return (Q->front==Q->rear);
+}
+Queue DeleteQ(Queue Q){
+	if(IsEmpty(Q)){
+		printf("duilie¿Õ\n");
+		return NULL;
 	}
-	if(strcmp(a,"pop")==0){
-		return pop;
-	}
-	if(strcmp(a,"end")==0){
-		return end;
-	}
-} 
-void printstack(stack s,int tag){
-	printf("ohh,I'm here\n");
-	if(tag==1){
-		printf("inside stack 1: \n");
-		for(int i=s->top1;i>=0;i--){
-			printf("%d ",s->data[s->top1]);
-			s->top1--;
-		}
-	}
-	if(tag==2){
-		printf("inside stack 2 : \n");
-		for(int i=s->top2;i<s->maxsize;i++){
-			printf("%d ",s->data[s->top2]);
-			s->top2++;
-		}
+	else{
+		Q->front=(Q->front+1)%Q->Maxsize;
+		return Q->front;
 	}
 }
-int main(){
-	int maxsize,tag=0,x=0;
-	scanf("%d",&maxsize);
-	stack s=createstack(maxsize);
-	int done=0;
-	while(done!=1){
-		switch (getop()){
-		case push:{
-			printf("i'm here\n");
-			scanf("%d %d",&tag,&x);
-			if(!Push(s,tag,x)) printf("stack %d is full",tag);
-			
-		}
-		break;
-		case pop:{printf("i'm here\n");
-			scanf("%d",tag);
-			x=Pop(s,tag);
-			if(x==ERROR){
-				printf("stack %d is empty",tag);
-			}
-		}
-		break;
-		case end:{printf("i'm here\n");
-			printstack(s,1);
-			printstack(s,2);
-			done=1;
-		}
-		break;
+
+BinTree CreatBinTree(){
+	int Data;
+	BinTree BT,T;
+	Queue Q=CreateQueue();
+	scanf("%d",&Data);
+	if(!Data==NoInfo){
+		BT=(BinTree)malloc(sizeof(struct TNode));
+		BT->Left=BT->Right=NULL;
+		BT->Data=Data;
+		AddQ(Q,BT);
 	}
-}
+	else{
+		return NULL;
+	}
 	
-	return 0;
+	while(!IsEmpty(Q)){
+		T=Delete(Q);
+		scanf("%d",&Data);
+		if(Data==NoInfo){
+			T->Left=NULL;
+		}
+		else{
+			T->Left=(BinTree)malloc(sizeof(struct TNode));
+			T->Left->Data=Data;
+			T->Left->Left=T->Left->Right=NULL;
+			AddQ(Q,T->Left);
+		}
+		
+		scanf("%d",&Data);
+		if(Data==NoInfo){
+			T->Right=NULL;
+		}
+		else{
+			T->Right=(BinTree)malloc(sizeof(struct TNode));
+			T->Right->Data=Data;
+			T->Right->Left=T->Right->Right=NULL;
+			AddQ(Q,T->Right);
+		}
+	}
+	return BT;
 }
+int GetHeight( BinTree BT );
+
+int main()
+{
+    BinTree BT = CreatBinTree();
+    printf("%d\n", GetHeight(BT));
+    return 0;
+}
+
+
+
+
+
+
